@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour, IPointerDownHandler
             return;
 
         _playerController.PlayCard(cardView);
+        _playerController.Player.EndTurn();
     }
 
     private CardView GetTileUnderTouch(PointerEventData eventData)
