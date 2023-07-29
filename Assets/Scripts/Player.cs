@@ -73,4 +73,9 @@ public class Player : IPlayer
     {
         return new List<ICard>(hand);
     }
+
+    public void TakeTurn()
+    {
+        //Activate card interaction
+    }
 }

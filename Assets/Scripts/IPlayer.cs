@@ -13,6 +13,7 @@ public interface IPlayer
     List<ICard> DrawCardsFromDeck(int numCardsToDraw = 1);
     List<ICard> GetHand();
     void RemoveCardFromHand(ICard card);
+    void TakeTurn();
 }
 
 public delegate void PlayerCardDrawHandler(IPlayer player, List<ICard> cardsDrawn);

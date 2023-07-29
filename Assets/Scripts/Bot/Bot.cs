@@ -68,6 +68,11 @@ public class Bot : IPlayer
         return new List<ICard>(hand);
     }
 
+    public void TakeTurn()
+    {
+        //decide which card to play and play it
+    }
+
     public class Factory : PlaceholderFactory<Bot>
     {
 

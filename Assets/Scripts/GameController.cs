@@ -29,9 +29,10 @@ public class GameController : MonoBehaviour
     private Deck.Settings _deckSettings;
 
     private TableController _tableController;
+    private ITurnManager _turnManager;
 
     [Inject]
-    public void Construct(RoomManager roomManager, BotController.Factory botFactory, IPlayer player, PlayerControllerBase playerController, CardView.CardPool cardPool, DeckController deckController, Deck.Settings deckSettings, TableController tableController)
+    public void Construct(RoomManager roomManager, BotController.Factory botFactory, IPlayer player, PlayerControllerBase playerController, CardView.CardPool cardPool, DeckController deckController, Deck.Settings deckSettings, TableController tableController, ITurnManager turnManager)
     {
         _roomManager = roomManager;
         _botFactory = botFactory;
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
         _currentPlayer = player;
         _deckSettings = deckSettings;
         _tableController = tableController;
+        _turnManager = turnManager;
 
         _roomManager.RoomReady += OnRoomReady;
 
@@ -64,7 +66,7 @@ public class GameController : MonoBehaviour
         }
 
         //Maybe turn starts here?
-        
+        _turnManager.StartNewTurn();
     }
 
     private void PutCardsOnTableFromDeck(Deck deck, int unvisibleCardCount, int visibleCardCount)
