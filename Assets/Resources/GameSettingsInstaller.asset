@@ -68,6 +68,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: da1a2d318d73492458c9ed82720a03e1, type: 2}
     drawAnimTime: 0.4
     drawAnimDelay: 0.3
+    initialDrawCount: 4
   roomManagerSettings:
     RoomPrefab: {fileID: 924871446429060408, guid: 80386dce0aea29b4592cb274a8336869, type: 3}
     RoomConfigs:
@@ -80,7 +81,7 @@ MonoBehaviour:
     - Name: Nobles
       MinBet: 50000
       MaxBet: 1000000
-    DefaultPlayerCount: 2
+    DefaultPlayerCount: 4
   currencyBaseSettings:
     Value: 100000
   botSettings:
