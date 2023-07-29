@@ -17,12 +17,15 @@ public class InputManager : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        var card = GetTileUnderTouch(eventData);
-        if(card == null)
+        if(_playerController.HasTurn == false)
             return;
-        Debug.Log(card.Card.Suit + " " + card.Card.Rank);
-    }
 
+        var cardView = GetTileUnderTouch(eventData);
+        if(cardView == null)
+            return;
+
+        _playerController.PlayCard(cardView);
+    }
 
     private CardView GetTileUnderTouch(PointerEventData eventData)
     {
