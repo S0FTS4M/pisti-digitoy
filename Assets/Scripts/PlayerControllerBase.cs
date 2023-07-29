@@ -80,9 +80,37 @@ public abstract class PlayerControllerBase : MonoBehaviour
         return currentSlot;
     }
 
-    public virtual void PlayCard(CardView card)
+    public virtual void RemoveCardFromHand(ICard card)
     {
-        // _tableController.
+        _player.RemoveCardFromHand(card);
+    }
+
+    public virtual void PlayCard(CardView cardView)
+    {
+        _tableController.PutCard(cardView, true);
+        _player.RemoveCardFromHand(cardView.Card);
+    }
+
+    public virtual void PlayCard(ICard card)
+    {
+        var cardView = FindCard(card);
+        if (cardView == null)
+            return;
+
+        _tableController.PutCard(card, true);
+        _player.RemoveCardFromHand(card);
+    }
+
+    public CardView FindCard(ICard card)
+    {
+        foreach (var cardView in HandSlots)
+        {
+            var cardInSlot = cardView.GetComponent<CardView>();
+            if (cardInSlot != null && cardInSlot.Card == card)
+                return cardView.GetComponent<CardView>();
+        }
+
+        return null;
     }
 
     private void OnPlayerTurn(IPlayer player)
