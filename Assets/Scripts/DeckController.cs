@@ -34,6 +34,6 @@ public class DeckController : MonoBehaviour
     private void OnRoomCreated(Room room)
     {
         _deck = _deckFactory.Create();
-
+        _deck.Shuffle();
     }
 }
