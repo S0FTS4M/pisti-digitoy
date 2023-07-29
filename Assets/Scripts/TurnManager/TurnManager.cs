@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class TurnManager : ITurnManager
 {
@@ -21,14 +22,28 @@ public class TurnManager : ITurnManager
 
     public void StartNewTurn()
     {
+        var seq = DOTween.Sequence();
         //TODO: draw 4 cards and place it to the table and show the card at the top
-
+        for (int i = 0; i < _players.Count; i++)
+        {
+            int index = i;
+            seq.AppendCallback(() =>
+            {
+                _players[index].RequestCardDraw(4);
+            }
+            );
+        }
         //TODO: first player takes the turn
     }
 
     public void AddPlayer(IPlayer player)
     {
         _players.Add(player);
+    }
+
+    public void AddPlayers(IEnumerable<IPlayer> players)
+    {
+        _players.AddRange(players);
     }
 
     public void ClearPlayers()
