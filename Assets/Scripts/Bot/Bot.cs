@@ -17,6 +17,7 @@ public class Bot : IPlayer
     public int LoseCount { get; private set; }
 
     public event PlayerCardDrawHandler PlayerDrawnCards;
+    public event CardDrawRequestedHandler PlayerRequestedCardDraw;
 
     private List<ICard> hand;
 
@@ -71,6 +72,11 @@ public class Bot : IPlayer
     public void TakeTurn()
     {
         //decide which card to play and play it
+    }
+
+    public void RequestCardDraw(int count)
+    {
+        PlayerRequestedCardDraw?.Invoke(count);
     }
 
     public class Factory : PlaceholderFactory<Bot>
