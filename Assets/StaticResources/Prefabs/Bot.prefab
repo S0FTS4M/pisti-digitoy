@@ -936,10 +936,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d12a72f79414ca48b01ddab920661be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handSlotParent: {fileID: 902885716295837592}
+  _currencyText: {fileID: 902885714767090772}
+  _scoreText: {fileID: 902885716179750588}
   _playerName: {fileID: 902885715379964924}
-  hand: {fileID: 902885716295837592}
-  _playerScoreText: {fileID: 902885716179750588}
-  _playerMoneyText: {fileID: 902885714767090772}
 --- !u!1 &902885716327489922
 GameObject:
   m_ObjectHideFlags: 0
