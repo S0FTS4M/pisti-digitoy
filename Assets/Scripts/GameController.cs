@@ -68,4 +68,15 @@ public class GameController : MonoBehaviour
         //Maybe turn starts here?
         _turnManager.StartNewTurn();
     }
+
+    public PlayerControllerBase GetPlayerController(IPlayer player)
+    {
+        if(_playerControllers.ContainsKey(player))
+        {
+            return _playerControllers[player];
+        }
+        
+        return null;
+    }
 }
+
