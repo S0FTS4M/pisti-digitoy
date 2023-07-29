@@ -18,6 +18,8 @@ public class Bot : IPlayer
 
     public event PlayerCardDrawHandler PlayerDrawnCards;
     public event CardDrawRequestedHandler PlayerRequestedCardDraw;
+    public event PlayerTurnHandler PlayerTurn;
+    public event PlayerTurnHandler PlayerEndTurn;
 
     private List<ICard> hand;
 
@@ -72,11 +74,17 @@ public class Bot : IPlayer
     public void TakeTurn()
     {
         //decide which card to play and play it
+        PlayerTurn?.Invoke(this);
     }
 
     public void RequestCardDraw(int count)
     {
         PlayerRequestedCardDraw?.Invoke(count);
+    }
+
+    public void EndTurn()
+    {
+        PlayerEndTurn?.Invoke(this);
     }
 
     public class Factory : PlaceholderFactory<Bot>
