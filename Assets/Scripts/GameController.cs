@@ -50,6 +50,8 @@ public class GameController : MonoBehaviour
 
     private void OnRoomReady(Room room)
     {
+        _turnManager.ClearPlayers();
+        _turnManager.AddPlayers(room.Players);
         _container.gameObject.SetActive(true);
 
         _tableController.Initialize(_deckController.Deck);
