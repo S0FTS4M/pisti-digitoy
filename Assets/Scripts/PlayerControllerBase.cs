@@ -24,6 +24,8 @@ public abstract class PlayerControllerBase : MonoBehaviour
     private DeckController _deckController;
     private TableController _tableController;
 
+    public bool HasTurn { get; set; }
+
     public IPlayer Player => _player;
 
     public List<Transform> HandSlots { get; } = new List<Transform>();
@@ -45,10 +47,11 @@ public abstract class PlayerControllerBase : MonoBehaviour
         {
             HandSlots.Add(child);
         }
+        _player.PlayerTurn += OnPlayerTurn;
+        _player.PlayerEndTurn += OnPlayerEndTurn;
         _player.PlayerRequestedCardDraw += OnDrawCardRequested;
         _player.PlayerDrawnCards += OnDrawCard;
     }
-
 
     private void OnDrawCard(IPlayer player, List<ICard> cardsDrawn)
     {
@@ -80,6 +83,16 @@ public abstract class PlayerControllerBase : MonoBehaviour
     public virtual void PlayCard(CardView card)
     {
         // _tableController.
+    }
+
+    private void OnPlayerTurn(IPlayer player)
+    {
+        HasTurn = true;
+    }
+
+    private void OnPlayerEndTurn(IPlayer player)
+    {
+        HasTurn = false;
     }
 
     private void OnDrawCardRequested(int count)

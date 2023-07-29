@@ -59,6 +59,7 @@ public class TurnManager : ITurnManager
 
     public void SwitchPlayer()
     {
+        CurrentPlayer.EndTurn();
         _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
         CurrentPlayer.TakeTurn();
     }

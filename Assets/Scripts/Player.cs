@@ -10,6 +10,8 @@ public class Player : IPlayer
 
     public event PlayerCardDrawHandler PlayerDrawnCards;
     public event CardDrawRequestedHandler PlayerRequestedCardDraw;
+    public event PlayerTurnHandler PlayerTurn;
+    public event PlayerTurnHandler PlayerEndTurn;
 
     public Player(ICurrencyBase currency)
     {
@@ -78,6 +80,12 @@ public class Player : IPlayer
     public void TakeTurn()
     {
         //Activate card interaction
+        PlayerTurn?.Invoke(this);
+    }
+
+    public void EndTurn()
+    {
+        PlayerEndTurn?.Invoke(this);
     }
 
     public void RequestCardDraw(int count)

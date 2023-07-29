@@ -5,6 +5,8 @@ public interface IPlayer
 {
     event PlayerCardDrawHandler PlayerDrawnCards;
     event CardDrawRequestedHandler PlayerRequestedCardDraw;
+    event PlayerTurnHandler PlayerTurn;
+    event PlayerTurnHandler PlayerEndTurn;
 
     Room CurrentRoom { get; set;}
     ICurrencyBase Currency { get; }
@@ -16,8 +18,10 @@ public interface IPlayer
     List<ICard> GetHand();
     void RemoveCardFromHand(ICard card);
     void TakeTurn();
+    void EndTurn();
     void RequestCardDraw(int count);
 }
 
 public delegate void PlayerCardDrawHandler(IPlayer player, List<ICard> cardsDrawn);
 public delegate void CardDrawRequestedHandler(int count);
+public delegate void PlayerTurnHandler(IPlayer player);
