@@ -8,7 +8,9 @@ public class CardView : MonoBehaviour
 
     private ICard _card;
     private Card.Settings _settings;
-    
+
+    public ICard Card => _card;
+
     [Inject]
     private void Construct(Card.Settings settings)
     {
