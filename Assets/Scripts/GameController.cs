@@ -56,8 +56,6 @@ public class GameController : MonoBehaviour
 
         _tableController.Initialize(_deckController.Deck);
 
-        PutCardsOnTableFromDeck(_deckController.Deck, 2, 1);
-
         //create bots here
         for (int i = 1; i < room.Players.Count; i++)
         {
@@ -69,56 +67,5 @@ public class GameController : MonoBehaviour
 
         //Maybe turn starts here?
         _turnManager.StartNewTurn();
-    }
-
-    private void PutCardsOnTableFromDeck(Deck deck, int unvisibleCardCount, int visibleCardCount)
-    {
-        var seq = DOTween.Sequence();
-        for (int i = 0; i < unvisibleCardCount; i++)
-        {
-            var card = deck.DrawCard();
-            CreateCardView(card, out CardView cardView, out RectTransform cardRect);
-            cardView.transform.SetParent(_tableController.Table.transform);
-            seq.AppendCallback(() =>
-            {
-                cardRect.DOSizeDelta(Vector2.zero, _deckSettings.drawAnimTime);
-                cardRect.DOAnchorPos(Vector2.zero, _deckSettings.drawAnimTime).OnComplete(() =>
-                {
-                    cardView.SetVisible(false);
-                }
-                );
-            });
-            seq.AppendInterval(_deckSettings.drawAnimTime);
-        }
-        for (int i = 0; i < visibleCardCount; i++)
-        {
-            var card = deck.DrawCard();
-            CreateCardView(card, out CardView cardView, out RectTransform cardRect);
-            cardView.transform.SetParent(_tableController.Table.transform);
-            seq.AppendCallback(() =>
-            {
-                cardRect.DOSizeDelta(Vector2.zero, _deckSettings.drawAnimTime);
-                cardRect.DOAnchorPos(Vector2.zero, _deckSettings.drawAnimTime).OnComplete(() =>
-                {
-                    cardView.SetVisible(true);
-                }
-                );
-            });
-            seq.AppendInterval(_deckSettings.drawAnimTime);
-        }
-    }
-
-
-    public void CreateCardView(ICard card, out CardView cardView, out RectTransform cardRect)
-    {
-        cardView = _cardPool.Spawn();
-        cardView.transform.SetParent(_deckController.DeckTransform);
-        cardRect = cardView.GetComponent<RectTransform>();
-        cardRect.offsetMax = Vector2.zero;
-        cardRect.offsetMin = Vector2.zero;
-        cardRect.sizeDelta = Vector2.zero;
-
-        cardView.SetCard(card);
-        cardView.SetVisible(false);
     }
 }

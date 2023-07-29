@@ -21,17 +21,19 @@ public abstract class PlayerControllerBase : MonoBehaviour
     private IPlayer _player;
 
     private Deck.Settings _deckSettings;
-    private GameController _gameController;
+    private DeckController _deckController;
+    private TableController _tableController;
 
     public IPlayer Player => _player;
 
     public List<Transform> HandSlots { get; } = new List<Transform>();
 
     [Inject]
-    private void Construct(Deck.Settings deckSettings, GameController gameController)
+    private void Construct(Deck.Settings deckSettings, DeckController deckController, TableController tableController)
     {
         _deckSettings = deckSettings;
-        _gameController = gameController;
+        _deckController = deckController;
+        _tableController = tableController;
     }
 
     public virtual void SetPlayer(IPlayer player)
@@ -54,7 +56,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         {
             CardView cardView;
             RectTransform cardRect;
-            _gameController.CreateCardView(card, out cardView, out cardRect);
+            _deckController.CreateCardView(card, out cardView, out cardRect);
             AddCardToHand(cardView);
 
             cardRect.DOSizeDelta(Vector2.zero, _deckSettings.drawAnimTime);
@@ -77,7 +79,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
     public virtual void PlayCard(CardView card)
     {
-
+        // _tableController.
     }
 
     private void OnDrawCardRequested(int count)

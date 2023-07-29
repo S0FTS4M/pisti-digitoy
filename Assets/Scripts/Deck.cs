@@ -47,5 +47,6 @@ public class Deck : IDeck
         public List<CardInfo> cardInfos;
         public float drawAnimTime;
         public float drawAnimDelay;
+        public int initialDrawCount;
     }
 }

@@ -8,7 +8,7 @@ public class DeckController : MonoBehaviour
     private Transform deckTransform;
 
     private Deck.Factory _deckFactory;
-
+    private CardView.CardPool _cardPool;
     private Deck _deck;
 
     public Transform DeckTransform => deckTransform;
@@ -16,11 +16,25 @@ public class DeckController : MonoBehaviour
     public Deck Deck { get => _deck; set => _deck = value; }
 
     [Inject]
-    private void Construct(RoomManager roomManager, Deck.Factory deckFactory)
+    private void Construct(RoomManager roomManager, Deck.Factory deckFactory, CardView.CardPool cardPool)
     {
         this._deckFactory = deckFactory;
+        this._cardPool = cardPool;
         roomManager.RoomCreated += OnRoomCreated;
         roomManager.RoomJoined += OnPlayersJoined;
+    }
+
+    public void CreateCardView(ICard card, out CardView cardView, out RectTransform cardRect)
+    {
+        cardView = _cardPool.Spawn();
+        cardView.transform.SetParent(DeckTransform);
+        cardRect = cardView.GetComponent<RectTransform>();
+        cardRect.offsetMax = Vector2.zero;
+        cardRect.offsetMin = Vector2.zero;
+        cardRect.sizeDelta = Vector2.zero;
+
+        cardView.SetCard(card);
+        cardView.SetVisible(false);
     }
 
     private void OnPlayersJoined(Room room)
