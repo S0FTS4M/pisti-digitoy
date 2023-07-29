@@ -72,6 +72,11 @@ public class Player : IPlayer
         hand.Remove(card);
     }
 
+    public bool HasCardInHand(ICard card)
+    {
+        return hand.Contains(card);
+    }
+
     public List<ICard> GetHand()
     {
         return new List<ICard>(hand);

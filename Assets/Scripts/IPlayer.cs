@@ -20,6 +20,7 @@ public interface IPlayer
     void TakeTurn();
     void EndTurn();
     void RequestCardDraw(int count);
+    bool HasCardInHand(ICard card);
 }
 
 public delegate void PlayerCardDrawHandler(IPlayer player, List<ICard> cardsDrawn);

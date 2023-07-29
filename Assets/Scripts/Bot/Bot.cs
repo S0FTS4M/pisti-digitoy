@@ -87,6 +87,11 @@ public class Bot : IPlayer
         PlayerEndTurn?.Invoke(this);
     }
 
+    public bool HasCardInHand(ICard card)
+    {
+        return hand.Contains(card);
+    }
+
     public class Factory : PlaceholderFactory<Bot>
     {
 

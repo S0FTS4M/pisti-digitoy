@@ -17,18 +17,22 @@ public class InputManager : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_playerController.HasTurn == false)
+        if (_playerController.HasTurn == false)
             return;
 
-        var cardView = GetTileUnderTouch(eventData);
-        if(cardView == null)
+        var cardView = GetCardUnderTouch(eventData);
+        if (cardView == null)
+            return;
+
+        //CHECK: this is bugged
+        if (_playerController.Player.HasCardInHand(cardView.Card) == false)
             return;
 
         _playerController.PlayCard(cardView);
         _playerController.Player.EndTurn();
     }
 
-    private CardView GetTileUnderTouch(PointerEventData eventData)
+    private CardView GetCardUnderTouch(PointerEventData eventData)
     {
         List<RaycastResult> result = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, result);
