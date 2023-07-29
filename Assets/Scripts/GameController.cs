@@ -52,13 +52,7 @@ public class GameController : MonoBehaviour
 
         _tableController.Initialize(_deckController.Deck);
 
-        PutCardsOnTable(_deckController.Deck, 2, 1);
-
-        for (int i = 0; i < room.Players.Count; i++)
-        {
-            var player = room.Players[i];
-            player.PlayerDrawnCards += OnPlayerDrawnCards;
-        }
+        PutCardsOnTableFromDeck(_deckController.Deck, 2, 1);
 
         //create bots here
         for (int i = 1; i < room.Players.Count; i++)
@@ -69,21 +63,11 @@ public class GameController : MonoBehaviour
             _playerControllers.Add(room.Players[i], bot);
         }
 
-        var seq = DOTween.Sequence();
-
-        for (int cardCount = 0; cardCount < 4; cardCount++)
-        {
-            for (int i = 0; i < room.Players.Count; i++)
-            {
-                var player = room.Players[i];
-                seq.AppendCallback(() => player.DrawCardsFromDeck(1));
-                seq.AppendInterval(_deckSettings.drawAnimDelay);
-            }
-        }
-
+        //Maybe turn starts here?
+        
     }
 
-    private void PutCardsOnTable(Deck deck, int unvisibleCardCount, int visibleCardCount)
+    private void PutCardsOnTableFromDeck(Deck deck, int unvisibleCardCount, int visibleCardCount)
     {
         var seq = DOTween.Sequence();
         for (int i = 0; i < unvisibleCardCount; i++)
@@ -120,28 +104,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnPlayerDrawnCards(IPlayer player, List<ICard> cardsDrawn)
-    {
-        var playerController = _playerControllers[player];
 
-
-        foreach (var card in cardsDrawn)
-        {
-            CardView cardView;
-            RectTransform cardRect;
-            CreateCardView(card, out cardView, out cardRect);
-            playerController.AddCardToHand(cardView);
-
-            cardRect.DOSizeDelta(Vector2.zero, _deckSettings.drawAnimTime);
-            cardRect.DOAnchorPos(Vector2.zero, _deckSettings.drawAnimTime).OnComplete(() =>
-            {
-                cardView.SetVisible(_currentPlayer == player);
-            }
-            );
-        }
-    }
-
-    private void CreateCardView(ICard card, out CardView cardView, out RectTransform cardRect)
+    public void CreateCardView(ICard card, out CardView cardView, out RectTransform cardRect)
     {
         cardView = _cardPool.Spawn();
         cardView.transform.SetParent(_deckController.DeckTransform);

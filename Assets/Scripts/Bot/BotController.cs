@@ -17,16 +17,12 @@ public class BotController : PlayerControllerBase
     [SerializeField]
     private TextMeshProUGUI _playerMoneyText;
 
-    public void SetPlayer(IPlayer player)
+    public override void SetPlayer(IPlayer player)
     {
+        base.SetPlayer(player);
         _playerName.text = "Bot";
         _playerScoreText.text = player.Score.ToString();
         _playerMoneyText.text = player.Currency.Amount.ToString();
-
-        foreach(Transform handSlot in hand)
-        {
-            HandSlots.Add(handSlot);
-        }
     }
 
     public class Factory : PlaceholderFactory<BotController>
