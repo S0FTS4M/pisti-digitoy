@@ -15,19 +15,18 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
     [SerializeField]
     protected TextMeshProUGUI _scoreText;
-    
+
     private int _currentSlotIndex = 0;
 
     private IPlayer _player;
 
-    private Room room;
     private Deck.Settings _deckSettings;
     private GameController _gameController;
 
     public IPlayer Player => _player;
 
     public List<Transform> HandSlots { get; } = new List<Transform>();
-    
+
     [Inject]
     private void Construct(Deck.Settings deckSettings, GameController gameController)
     {
@@ -38,14 +37,16 @@ public abstract class PlayerControllerBase : MonoBehaviour
     public virtual void SetPlayer(IPlayer player)
     {
         _player = player;
+        _currentSlotIndex = 0;
 
         foreach (Transform child in handSlotParent)
         {
             HandSlots.Add(child);
         }
-
+        _player.PlayerRequestedCardDraw += OnDrawCardRequested;
         _player.PlayerDrawnCards += OnDrawCard;
     }
+
 
     private void OnDrawCard(IPlayer player, List<ICard> cardsDrawn)
     {
@@ -79,18 +80,19 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
     }
 
+    private void OnDrawCardRequested(int count)
+    {
+        DrawCard(count);
+    }
+
     public virtual void DrawCard(int count)
     {
         var seq = DOTween.Sequence();
 
-        for (int cardCount = 0; cardCount < 4; cardCount++)
+        for (int cardCount = 0; cardCount < count; cardCount++)
         {
-            for (int i = 0; i < room.Players.Count; i++)
-            {
-                var player = room.Players[i];
-                seq.AppendCallback(() => player.DrawCardsFromDeck(1));
-                seq.AppendInterval(_deckSettings.drawAnimDelay);
-            }
+            seq.AppendCallback(() => _player.DrawCardsFromDeck(1));
+            seq.AppendInterval(_deckSettings.drawAnimDelay);
         }
 
     }
