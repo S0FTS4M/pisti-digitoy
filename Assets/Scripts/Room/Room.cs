@@ -7,7 +7,7 @@ public class Room
     public string Name { get; }
     public int MinBet { get; }
     public int MaxBet { get; }
-    public List<IPlayer> Players { get; }
+    public List<PlayerBase> Players { get; }
 
     public Room(RoomConfig roomConfig)
     {
@@ -15,10 +15,10 @@ public class Room
         Name = roomConfig.Name;
         MinBet = roomConfig.MinBet;
         MaxBet = roomConfig.MaxBet;
-        Players = new List<IPlayer>();
+        Players = new List<PlayerBase>();
     }
 
-    public void JoinRoom(IPlayer player)
+    public void JoinRoom(PlayerBase player)
     {
         Players.Add(player);
         player.CurrentRoom = this;

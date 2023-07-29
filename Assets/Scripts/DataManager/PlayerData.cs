@@ -5,6 +5,8 @@ public class PlayerData : ISaveLoadData
 {
     public bool IsLoaded { get; set; }
     public CurrencyBase.CurrencyData currencyData;
+    public int WinCount;
+    public int LoseCount;
 
     public PlayerData()
     {

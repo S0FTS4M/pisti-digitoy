@@ -22,7 +22,7 @@ public class GameInstaller : MonoInstaller
     {
         Container.Bind<DataManager>().AsSingle();
         Container.Bind<RoomManager>().AsSingle();
-        Container.Bind<IPlayer>().To<Player>().AsSingle();
+        Container.Bind<PlayerBase>().To<Player>().AsSingle();
         Container.Bind<PlayerControllerBase>().To<PlayerController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ICurrencyBase>().To<MainCurrencyBase>().AsTransient();
         Container.Bind<IDeck>().To<Deck>().AsTransient();

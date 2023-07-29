@@ -5,7 +5,7 @@ using Zenject;
 
 public class RoomManager
 {
-    private IPlayer player;
+    private PlayerBase player;
 
     private Room _currentRoom;
 
@@ -20,7 +20,7 @@ public class RoomManager
     public event Action<Room.RoomConfig> RoomCreationFailed;
 
     [Inject]
-    private void Construct(IPlayer player, Bot.Factory botFactory)
+    private void Construct(PlayerBase player, Bot.Factory botFactory)
     {
         _botFactory = botFactory;
         this.player = player;

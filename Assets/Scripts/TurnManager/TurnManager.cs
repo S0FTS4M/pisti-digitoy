@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 
 public class TurnManager : ITurnManager
 {
-    private readonly List<IPlayer> _players;
+    private readonly List<PlayerBase> _players;
     private TableController _tableController;
     private int _currentPlayerIndex;
 
@@ -15,12 +16,12 @@ public class TurnManager : ITurnManager
     {
         _tableController = tableController;
         _currentPlayerIndex = 0;
-        _players = new List<IPlayer>();
+        _players = new List<PlayerBase>();
     }
 
     public int CurrentPlayerIndex => _currentPlayerIndex;
 
-    public IPlayer CurrentPlayer => _players[_currentPlayerIndex];
+    public PlayerBase CurrentPlayer => _players[_currentPlayerIndex];
 
     public void StartNewTurn()
     {
@@ -42,14 +43,56 @@ public class TurnManager : ITurnManager
         CurrentPlayer.TakeTurn();
     }
 
-    public void AddPlayer(IPlayer player)
+    public void AddPlayer(PlayerBase player)
     {
         _players.Add(player);
+        player.PlayerEndTurn += OnPlayerEndTurn;
     }
 
-    public void AddPlayers(IEnumerable<IPlayer> players)
+    private void OnPlayerEndTurn(PlayerBase player)
+    {
+        if(CheckAllPlayersOutOfCards())
+        {
+            var seq = DOTween.Sequence();
+            for (int i = 0; i < _players.Count; i++)
+            {
+                int index = i;
+                seq.AppendCallback(() =>
+                {
+                    _players[index].RequestCardDraw(4);
+                }
+                );
+                seq.AppendInterval(1f);
+            }
+        }
+        SwitchPlayer();
+    }
+
+    private bool CheckAllPlayersOutOfCards()
+    {
+        var allOutOfCard = true;
+        foreach (var player in _players)
+        {
+            if (player.Hand.Count == 0)
+            {
+                allOutOfCard &= true;
+            }
+            else 
+            {
+                allOutOfCard = false;
+            }
+        }
+
+        return allOutOfCard;
+    }
+
+    public void AddPlayers(IEnumerable<PlayerBase> players)
     {
         _players.AddRange(players);
+        foreach (var player in players)
+        {
+            player.PlayerEndTurn += OnPlayerEndTurn;
+        }
     }
 
     public void ClearPlayers()
@@ -59,7 +102,6 @@ public class TurnManager : ITurnManager
 
     public void SwitchPlayer()
     {
-        CurrentPlayer.EndTurn();
         _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
         CurrentPlayer.TakeTurn();
     }

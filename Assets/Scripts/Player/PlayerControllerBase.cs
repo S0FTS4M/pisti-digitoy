@@ -18,15 +18,15 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
     private int _currentSlotIndex = 0;
 
-    private IPlayer _player;
+    private PlayerBase _player;
 
     private Deck.Settings _deckSettings;
     private DeckController _deckController;
-    private TableController _tableController;
+    protected TableController _tableController;
 
     public bool HasTurn { get; set; }
 
-    public IPlayer Player => _player;
+    public PlayerBase Player => _player;
 
     public List<Transform> HandSlots { get; } = new List<Transform>();
 
@@ -38,7 +38,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         _tableController = tableController;
     }
 
-    public virtual void SetPlayer(IPlayer player)
+    public virtual void SetPlayer(PlayerBase player)
     {
         _player = player;
         _currentSlotIndex = 0;
@@ -53,7 +53,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         _player.PlayerDrawnCards += OnDrawCard;
     }
 
-    private void OnDrawCard(IPlayer player, List<ICard> cardsDrawn)
+    private void OnDrawCard(PlayerBase player, List<ICard> cardsDrawn)
     {
         foreach (var card in cardsDrawn)
         {
@@ -79,52 +79,53 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
         return currentSlot;
     }
-
-    public virtual void RemoveCardFromHand(ICard card)
+    
+    public virtual void PlayCard(CardView cardView, Action onComplete)
     {
-        _player.RemoveCardFromHand(card);
-    }
-
-    public virtual void PlayCard(CardView cardView)
-    {
-        _tableController.PutCard(cardView, true);
+        _tableController.PutCard(cardView, true, onComplete);
         _player.RemoveCardFromHand(cardView.Card);
     }
 
-    public virtual void PlayCard(ICard card)
+    public virtual void PlayCard(ICard card, Action onComplete)
     {
         var cardView = FindCard(card);
         if (cardView == null)
             return;
 
-        _tableController.PutCard(card, true);
-        _player.RemoveCardFromHand(card);
+        PlayCard(cardView, onComplete);
+    }
+
+    public void ResetHand()
+    {
+        _currentSlotIndex = 0;
     }
 
     public CardView FindCard(ICard card)
     {
-        foreach (var cardView in HandSlots)
+        foreach (var handSlot in HandSlots)
         {
-            var cardInSlot = cardView.GetComponent<CardView>();
+            var cardInSlot = handSlot.GetComponentInChildren<CardView>();
             if (cardInSlot != null && cardInSlot.Card == card)
-                return cardView.GetComponent<CardView>();
+                return handSlot.GetComponentInChildren<CardView>();
         }
 
         return null;
     }
 
-    private void OnPlayerTurn(IPlayer player)
+    protected virtual void OnPlayerTurn(PlayerBase player)
     {
         HasTurn = true;
     }
 
-    private void OnPlayerEndTurn(IPlayer player)
+    private void OnPlayerEndTurn(PlayerBase player)
     {
         HasTurn = false;
+        Debug.Log("end turnnnn");
     }
 
     private void OnDrawCardRequested(int count)
     {
+        ResetHand();
         DrawCard(count);
     }
 

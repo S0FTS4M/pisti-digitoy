@@ -22,14 +22,14 @@ public class RoomUIController : MonoBehaviour
 
     private EntranceUIController _entranceUIController;
 
-    private IPlayer _player;
+    private PlayerBase _player;
 
     private RoomManager _roomManager;
     private RoomManager.Settings _roomManagerSettings;
     private Room.RoomConfig _roomConfig;
 
     [Inject]
-    private void Construct(EntranceUIController entranceUIController, IPlayer player, RoomManager roomManager,RoomManager.Settings roomManagerSettings)
+    private void Construct(EntranceUIController entranceUIController, PlayerBase player, RoomManager roomManager,RoomManager.Settings roomManagerSettings)
     {
         _entranceUIController = entranceUIController;
         _player = player;

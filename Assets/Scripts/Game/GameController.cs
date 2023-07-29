@@ -18,13 +18,13 @@ public class GameController : MonoBehaviour
 
     private BotController.Factory _botFactory;
 
-    private Dictionary<IPlayer, PlayerControllerBase> _playerControllers = new Dictionary<IPlayer, PlayerControllerBase>();
+    private Dictionary<PlayerBase, PlayerControllerBase> _playerControllers = new Dictionary<PlayerBase, PlayerControllerBase>();
 
     private CardView.CardPool _cardPool;
 
     private DeckController _deckController;
 
-    private IPlayer _currentPlayer;
+    private PlayerBase _currentPlayer;
 
     private Deck.Settings _deckSettings;
 
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
     private ITurnManager _turnManager;
 
     [Inject]
-    public void Construct(RoomManager roomManager, BotController.Factory botFactory, IPlayer player, PlayerControllerBase playerController, CardView.CardPool cardPool, DeckController deckController, Deck.Settings deckSettings, TableController tableController, ITurnManager turnManager)
+    public void Construct(RoomManager roomManager, BotController.Factory botFactory, PlayerBase player, PlayerControllerBase playerController, CardView.CardPool cardPool, DeckController deckController, Deck.Settings deckSettings, TableController tableController, ITurnManager turnManager)
     {
         _roomManager = roomManager;
         _botFactory = botFactory;
@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
         _turnManager.StartNewTurn();
     }
 
-    public PlayerControllerBase GetPlayerController(IPlayer player)
+    public PlayerControllerBase GetPlayerController(PlayerBase player)
     {
         if(_playerControllers.ContainsKey(player))
         {

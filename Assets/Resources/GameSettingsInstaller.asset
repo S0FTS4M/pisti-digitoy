@@ -81,7 +81,7 @@ MonoBehaviour:
     - Name: Nobles
       MinBet: 50000
       MaxBet: 1000000
-    DefaultPlayerCount: 4
+    DefaultPlayerCount: 2
   currencyBaseSettings:
     Value: 100000
   botSettings:

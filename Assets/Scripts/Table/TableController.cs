@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -29,7 +30,7 @@ public class TableController : MonoBehaviour
 
         Cards = new List<ICard>();
     }
-    public void PutCard(CardView cardView, bool isVisible)
+    public void PutCard(CardView cardView, bool isVisible, Action onComplete)
     {
         var seq = DOTween.Sequence();
 
@@ -42,14 +43,15 @@ public class TableController : MonoBehaviour
         cardRect.DOAnchorPos(Vector2.zero, _deckSettings.drawAnimTime).OnComplete(() =>
         {
             cardView.SetVisible(isVisible);
+            onComplete?.Invoke();
         }
         );
     }
 
-    public void PutCard(ICard card, bool isVisible)
+    public void PutCard(ICard card, bool isVisible, Action onComplete)
     {
         _deckController.CreateCardView(card, out CardView cardView, out RectTransform cardRect);
-        PutCard(cardView, isVisible);
+        PutCard(cardView, isVisible, onComplete);
     }
 
     public void PutStartingCards()
@@ -62,9 +64,14 @@ public class TableController : MonoBehaviour
             var isLastCard = i == _deckSettings.initialDrawCount - 1;
             seq.AppendCallback(() =>
             {
-                PutCard(card, isLastCard);
+                PutCard(card, isLastCard, null);
             });
             seq.AppendInterval(_deckSettings.drawAnimTime);
         }
+    }
+
+    public ICard GetTopCard()
+    {
+        return Cards[Cards.Count - 1];
     }
 }

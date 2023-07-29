@@ -22,8 +22,8 @@ public class CardView : MonoBehaviour
         _card = card;
         if(card.IsVisible)
             cardImage.sprite = card.Sprite;
-        else
-            cardImage.sprite = _settings.cardBacks;
+       else
+           cardImage.sprite = _settings.cardBacks;
     }
 
     public void SetVisible(bool visible)
