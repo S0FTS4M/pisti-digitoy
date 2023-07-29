@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -15,7 +14,6 @@ public class InputManager : MonoBehaviour, IPointerDownHandler
     {
         _playerController = playerController;
     }
-
 
     public void OnPointerDown(PointerEventData eventData)
     {
