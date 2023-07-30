@@ -4,6 +4,8 @@ public interface IDeck
     void CreateStandardDeck();
     ICard DrawCard();
     void Shuffle();
+
+    int CardCount { get; }
 }
 
 public delegate void CardDrawnEventHandler(ICard card);

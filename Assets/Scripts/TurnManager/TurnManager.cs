@@ -6,15 +6,18 @@ public class TurnManager : ITurnManager
 {
     private readonly List<PlayerBase> _players;
     private TableController _tableController;
+    private Deck.Settings _deckSettings;
     private int _currentPlayerIndex;
 
     public delegate void TurnManagerEventHandler(int playerIndex);
     public event TurnManagerEventHandler TurnStarted;
     public event TurnManagerEventHandler TurnEnded;
 
-    public TurnManager(TableController tableController)
+    public TurnManager(TableController tableController, Deck.Settings deckSettings)
     {
         _tableController = tableController;
+        _deckSettings = deckSettings;
+
         _currentPlayerIndex = 0;
         _players = new List<PlayerBase>();
     }
@@ -51,18 +54,25 @@ public class TurnManager : ITurnManager
 
     private void OnPlayerEndTurn(PlayerBase player)
     {
-        if(CheckAllPlayersOutOfCards())
+        if (CheckAllPlayersOutOfCards())
         {
-            var seq = DOTween.Sequence();
-            for (int i = 0; i < _players.Count; i++)
+            if (player.Deck.CardCount >= _players.Count * _deckSettings.initialDrawCount)
             {
-                int index = i;
-                seq.AppendCallback(() =>
+                var seq = DOTween.Sequence();
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    _players[index].RequestCardDraw(4);
+                    int index = i;
+                    seq.AppendCallback(() =>
+                    {
+                        _players[index].RequestCardDraw(4);
+                    }
+                    );
+                    seq.AppendInterval(1f);
                 }
-                );
-                seq.AppendInterval(1f);
+            }
+            else
+            {
+                
             }
         }
         SwitchPlayer();
@@ -77,7 +87,7 @@ public class TurnManager : ITurnManager
             {
                 allOutOfCard &= true;
             }
-            else 
+            else
             {
                 allOutOfCard = false;
             }

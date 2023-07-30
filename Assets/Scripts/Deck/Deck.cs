@@ -6,6 +6,8 @@ public class Deck : IDeck
 {
     private IList<ICard> cards;
 
+    public int CardCount => cards.Count;
+
     public event CardDrawnEventHandler CardDrawn;
 
     public Deck(IList<ICard> cards)

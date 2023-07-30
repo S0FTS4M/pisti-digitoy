@@ -10,6 +10,8 @@ public class GameRuleManager
     private RoomManager _roomManager;
     private GameController _gameController;
 
+    private Room _currentRoom;
+
     public GameRuleManager(TableController tableController, RoomManager roomManager, GameController gameController)
     {
         this._tableController = tableController;
@@ -18,13 +20,25 @@ public class GameRuleManager
 
 
         roomManager.RoomJoined += OnRoomJoined;
+        roomManager.RoomLeft += OnRoomLeft;
     }
+
 
     private void OnRoomJoined(Room room)
     {
+        _currentRoom = room;
         foreach (var player in room.Players)
         {
             player.PlayerPlayedCard += OnPlayerPlayedCard;
+        }
+    }
+    
+    private void OnRoomLeft(Room room)
+    {
+        _currentRoom = null;
+        foreach (var player in room.Players)
+        {
+            player.PlayerPlayedCard -= OnPlayerPlayedCard;
         }
     }
 
