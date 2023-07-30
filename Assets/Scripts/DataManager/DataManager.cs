@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -62,7 +61,6 @@ public class DataManager
             serializedJson = streamReader.ReadToEnd();
         }
 
-
         string previousHash = PlayerPrefs.GetString(PLAYER_DATA_KEY);
 
 
@@ -93,7 +91,6 @@ public class DataManager
         string serializedPlayerData = JsonUtility.ToJson(playerData);
         PlayerPrefs.SetString(PLAYER_DATA_KEY, serializedPlayerData);
 
-
         if (Directory.Exists(DirectoryPath) == false)
         {
             Directory.CreateDirectory(DirectoryPath);
@@ -103,10 +100,7 @@ public class DataManager
         // Save hash of the serialized json to PlayerPrefs
         string hashOfTheSerializedJson = ComputeSHA1Hash(serializedPlayerData);
 
-
         PlayerPrefs.SetString(PLAYER_DATA_KEY, hashOfTheSerializedJson);
-
-
 
         using (var streamWriter = File.CreateText(FilePath))
         {
