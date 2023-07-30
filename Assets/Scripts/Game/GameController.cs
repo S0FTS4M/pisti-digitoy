@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
     private TableController _tableController;
     private ITurnManager _turnManager;
 
+    public event Action OnGameOver;
+
     [Inject]
     public void Construct(RoomManager roomManager, BotController.Factory botFactory, PlayerBase player, PlayerControllerBase playerController, CardView.CardPool cardPool, DeckController deckController, Deck.Settings deckSettings, TableController tableController, ITurnManager turnManager)
     {
@@ -77,6 +79,11 @@ public class GameController : MonoBehaviour
         }
         
         return null;
+    }
+
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
     }
 }
 

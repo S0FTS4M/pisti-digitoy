@@ -12,6 +12,8 @@ public class GameRuleManager
 
     private Room _currentRoom;
 
+    private PlayerBase lastPlayerCollectedCards;
+
     public GameRuleManager(TableController tableController, RoomManager roomManager, GameController gameController)
     {
         this._tableController = tableController;
@@ -21,8 +23,8 @@ public class GameRuleManager
 
         roomManager.RoomJoined += OnRoomJoined;
         roomManager.RoomLeft += OnRoomLeft;
+        gameController.OnGameOver += OnGameOver;
     }
-
 
     private void OnRoomJoined(Room room)
     {
@@ -32,7 +34,7 @@ public class GameRuleManager
             player.PlayerPlayedCard += OnPlayerPlayedCard;
         }
     }
-    
+
     private void OnRoomLeft(Room room)
     {
         _currentRoom = null;
@@ -46,17 +48,6 @@ public class GameRuleManager
     {
         var seq = DOTween.Sequence();
         var playerController = _gameController.GetPlayerController(player);
-        if (_tableController.Cards.Count > 2)
-        {
-            var topCard = _tableController.Cards[_tableController.Cards.Count - 1];
-            var secondTopCard = _tableController.Cards[_tableController.Cards.Count - 2];
-            if (topCard.Rank == secondTopCard.Rank || topCard.Rank == 11)
-            {
-                //player wons the cards
-                playerController.WonTheCardsOnTheTable(seq);
-            }
-        }
-
         if (_tableController.Cards.Count == 2)
         {
             var topCard = _tableController.Cards[_tableController.Cards.Count - 1];
@@ -65,6 +56,19 @@ public class GameRuleManager
             {
                 //player wons the cards
                 playerController.Phisti(seq);
+                lastPlayerCollectedCards = player;
+            }
+        }
+
+        if (_tableController.Cards.Count >= 2)
+        {
+            var topCard = _tableController.Cards[_tableController.Cards.Count - 1];
+            var secondTopCard = _tableController.Cards[_tableController.Cards.Count - 2];
+            if (topCard.Rank == secondTopCard.Rank || topCard.Rank == 11)
+            {
+                //player wons the cards
+                playerController.WonTheCardsOnTheTable(seq);
+                lastPlayerCollectedCards = player;
             }
         }
 
@@ -102,5 +106,29 @@ public class GameRuleManager
             return 10;
         }
     }
+
+    public void CalculateFinalScores()
+    {
+        var maxCards = int.MinValue;
+        var maxCardsPlayer = default(PlayerBase);
+        foreach (var player in _currentRoom.Players)
+        {
+            if(player.WonCards.Count > maxCards)
+            {
+                maxCards = player.WonCards.Count;
+                maxCardsPlayer = player;
+            }
+            player.WonCards.Clear();
+        }
+        maxCardsPlayer.AddScore(3);
+    }
+
+    private void OnGameOver()
+    {
+        var seq = DOTween.Sequence();
+        var playerController = _gameController.GetPlayerController(lastPlayerCollectedCards);
+        playerController.WonTheCardsOnTheTable(seq);
+    }
+
 }
 

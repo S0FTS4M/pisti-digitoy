@@ -56,7 +56,9 @@ public abstract class PlayerControllerBase : MonoBehaviour
         _player.PlayerEndTurn += OnPlayerEndTurn;
         _player.PlayerRequestedCardDraw += OnDrawCardRequested;
         _player.PlayerDrawnCards += OnDrawCard;
+        _player.PlayerScored += OnPlayerScored;
     }
+
 
     private void OnDrawCard(PlayerBase player, List<ICard> cardsDrawn)
     {
@@ -124,7 +126,6 @@ public abstract class PlayerControllerBase : MonoBehaviour
     private void OnPlayerEndTurn(PlayerBase player)
     {
         HasTurn = false;
-        Debug.Log("end turnnnn");
     }
 
     private void OnDrawCardRequested(int count)
@@ -170,6 +171,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         for(int i = _tableController.Table.transform.childCount - 1; i >= 0; i--)
         {
             var cardViewTransform = _tableController.Table.transform.GetChild(i);
+            var cardView = cardViewTransform.GetComponent<CardView>();
             cardViewTransform.SetParent(_wonCardsPileParent);
             var rectTansform = cardViewTransform.GetComponent<RectTransform>();
             seq.AppendCallback(() =>
@@ -178,9 +180,16 @@ public abstract class PlayerControllerBase : MonoBehaviour
                 rectTansform.DOSizeDelta(Vector2.zero, .1f);
             });
             seq.AppendInterval(.1f);
+            seq.AppendCallback(() => cardView.SetVisible(false));
+            Player.AddWonCard(cardView.Card);
         }
 
         _tableController.Cards.Clear();
+    }
+
+    private void OnPlayerScored(int score)
+    {
+        _scoreText.SetText(score.ToString());
     }
 
 }

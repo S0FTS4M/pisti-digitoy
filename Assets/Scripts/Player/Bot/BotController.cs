@@ -22,8 +22,6 @@ public class BotController : PlayerControllerBase
     {
         base.OnPlayerTurn(player);
 
-        Debug.Log("player turn");
-
         var topCard = _tableController.GetTopCard();
         if (topCard != null)
         {

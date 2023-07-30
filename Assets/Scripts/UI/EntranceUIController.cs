@@ -8,7 +8,6 @@ public class EntranceUIController : MonoBehaviour
     [SerializeField]
     private GameObject roomContainer;
 
-
     public void Show()
     {
         roomContainer.SetActive(true);

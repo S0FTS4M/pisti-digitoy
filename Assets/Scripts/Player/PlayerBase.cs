@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using SOFTSAM.Models.CurrencyManagement;
 
 public abstract class PlayerBase
 {
     protected List<ICard> hand;
+
+    private List<ICard> wonCards;
 
     private ICurrencyBase _currency;
 
@@ -12,11 +15,13 @@ public abstract class PlayerBase
     public event PlayerCardPlayedHandler PlayerPlayedCard;
     public event PlayerTurnHandler PlayerTurn;
     public event PlayerTurnHandler PlayerEndTurn;
+    public event ScoreHandler PlayerScored;
 
     public PlayerBase(ICurrencyBase currency)
     {
         _currency = currency;
         hand = new List<ICard>();
+        wonCards = new List<ICard>();
     }
 
     public Room CurrentRoom { get; set; }
@@ -33,13 +38,7 @@ public abstract class PlayerBase
 
     public List<ICard> Hand => hand;
 
-    public void DrawInitialCards(int numCardsToDraw)
-    {
-        for (int i = 0; i < numCardsToDraw; i++)
-        {
-            DrawCardFromDeck();
-        }
-    }
+    public List<ICard> WonCards => wonCards;
 
     public List<ICard> DrawCardsFromDeck(int numCardsToDraw)
     {
@@ -98,8 +97,8 @@ public abstract class PlayerBase
     public virtual void AddScore(int score)
     {
         Score += score;
-        //TODO: notify UI of score change
-    }
+        PlayerScored?.Invoke(Score);
+    }   
 
     public void EndTurn()
     {
@@ -110,9 +109,15 @@ public abstract class PlayerBase
     {
         PlayerRequestedCardDraw?.Invoke(count);
     }
+
+    public void AddWonCard(ICard card)
+    {
+        wonCards.Add(card);
+    }
 }
 
 public delegate void PlayerCardDrawHandler(PlayerBase player, List<ICard> cardsDrawn);
 public delegate void CardDrawRequestedHandler(int count);
 public delegate void PlayerTurnHandler(PlayerBase player);
 public delegate void PlayerCardPlayedHandler(PlayerBase player, ICard card);
+public delegate void ScoreHandler(int score);

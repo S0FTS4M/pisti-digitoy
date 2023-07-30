@@ -26,15 +26,17 @@ public class RoomUIController : MonoBehaviour
 
     private RoomManager _roomManager;
     private RoomManager.Settings _roomManagerSettings;
+    private CreateRoomUIController _createRoomUIController;
     private Room.RoomConfig _roomConfig;
 
     [Inject]
-    private void Construct(EntranceUIController entranceUIController, PlayerBase player, RoomManager roomManager,RoomManager.Settings roomManagerSettings)
+    private void Construct(EntranceUIController entranceUIController, PlayerBase player, RoomManager roomManager, RoomManager.Settings roomManagerSettings, CreateRoomUIController createRoomUIController)
     {
         _entranceUIController = entranceUIController;
         _player = player;
         _roomManager = roomManager;
         _roomManagerSettings = roomManagerSettings;
+        _createRoomUIController = createRoomUIController;
 
         _roomManager.RoomCreated += OnRoomCreated;
         _roomManager.RoomCreationFailed += OnRoomCreationFailed;
@@ -46,18 +48,23 @@ public class RoomUIController : MonoBehaviour
         roomNameText.text = roomConfig.Name;
         betRangeText.text = $"Bet Range: {roomConfig.MinBet} - {roomConfig.MaxBet}";
         playNowButton.onClick.AddListener(OnPlayButtonClicked);
+        createTableButton.onClick.AddListener(() =>
+        {
+            _createRoomUIController.Show(roomConfig);
+            _entranceUIController.Hide();
+        });
     }
 
     private void OnRoomCreated(Room room)
     {
-        if(room.Name != _roomConfig.Name)
+        if (room.Name != _roomConfig.Name)
             return;
         _entranceUIController.Hide();
     }
 
     private void OnRoomCreationFailed(Room.RoomConfig roomConfig)
     {
-        if(roomConfig.Name != _roomConfig.Name)
+        if (roomConfig.Name != _roomConfig.Name)
             return;
         Debug.Log("You can not join this room with your current currency");
     }

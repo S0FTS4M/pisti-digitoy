@@ -33,6 +33,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<GameController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ITurnManager>().To<TurnManager>().AsSingle();
         Container.Bind<GameRuleManager>().AsSingle().NonLazy();
+        Container.Bind<CreateRoomUIController>().FromComponentInHierarchy().AsSingle();
         Container.BindFactory<RoomUIController, RoomUIController.Factory>().FromComponentInNewPrefab(roomManagerSettings.RoomPrefab);
         Container.BindFactory<BotController, BotController.Factory>().FromComponentInNewPrefab(botSettings.BotPrefab);
         Container.BindFactory<Bot, Bot.Factory>().AsSingle();

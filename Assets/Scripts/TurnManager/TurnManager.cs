@@ -7,16 +7,20 @@ public class TurnManager : ITurnManager
     private readonly List<PlayerBase> _players;
     private TableController _tableController;
     private Deck.Settings _deckSettings;
+    private GameRuleManager _gameRuleManager;
+    private GameController _gameController;
     private int _currentPlayerIndex;
 
     public delegate void TurnManagerEventHandler(int playerIndex);
     public event TurnManagerEventHandler TurnStarted;
     public event TurnManagerEventHandler TurnEnded;
 
-    public TurnManager(TableController tableController, Deck.Settings deckSettings)
+    public TurnManager(TableController tableController, Deck.Settings deckSettings, GameRuleManager gameRuleManager, GameController gameController)
     {
         _tableController = tableController;
         _deckSettings = deckSettings;
+        _gameRuleManager = gameRuleManager;
+        _gameController = gameController;
 
         _currentPlayerIndex = 0;
         _players = new List<PlayerBase>();
@@ -72,7 +76,9 @@ public class TurnManager : ITurnManager
             }
             else
             {
-                
+                _gameRuleManager.CalculateFinalScores();
+                _gameController.GameOver();
+
             }
         }
         SwitchPlayer();
