@@ -16,5 +16,6 @@ public class PlayerData : ISaveLoadData
     public void SetLoaded(bool isLoaded)
     {
         currencyData.IsLoaded = isLoaded;
+        IsLoaded = isLoaded;
     }
 }

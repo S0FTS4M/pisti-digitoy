@@ -140,12 +140,12 @@ public class GameRuleManager
                 maxScorePlayer = player;
             }
         }
-        maxScorePlayer.WinCount++;
+        maxScorePlayer.Win();
         foreach (var player in _currentRoom.Players)
         {
             if (player != maxScorePlayer)
             {
-                player.LoseCount++;
+                player.Lose();
             }
         }
     }

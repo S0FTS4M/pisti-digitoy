@@ -34,9 +34,9 @@ public abstract class PlayerBase
 
     public int Score { get; protected set; }
 
-    public int WinCount { get; set; }
+    public int WinCount { get; protected set; }
 
-    public int LoseCount { get; set; }
+    public int LoseCount { get; protected set; }
 
     public List<ICard> Hand => hand;
 
@@ -123,6 +123,17 @@ public abstract class PlayerBase
     {
         hand.Clear();
         wonCards.Clear();
+        Score = 0;
+        PlayerScored?.Invoke(Score);
+    }
+
+    public virtual void Win()
+    {
+        WinCount++;
+    }
+    public virtual void Lose()
+    {
+        LoseCount++;
     }
 }
 
