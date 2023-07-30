@@ -1,4 +1,4 @@
-# Unity Pişti Oyunu 
+# Unity Pishti Game 
 Clone the repo.
 ```bash
 git clone https://github.com/S0FTS4M/pisti-digitoy.git
