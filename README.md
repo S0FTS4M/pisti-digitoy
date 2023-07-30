@@ -15,7 +15,7 @@ git submodule update
 
 Open Unity then goto Scenes folder. Open Main scene. You are ready to go.
 
-## Yol haritası
+## NOTES
 - A warning can be shown when they do not have enough money to enter the room
 - A warning can be shown when he leaves the game halfway through that he will lose the money
 - When newgame is called in Table Options, a warning can be shown if the money is not enough
