@@ -37,6 +37,9 @@ public class GameRuleManager
 
     private void OnRoomLeft(Room room)
     {
+        if(_currentRoom == null)
+            return;
+            
         _currentRoom = null;
         foreach (var player in room.Players)
         {

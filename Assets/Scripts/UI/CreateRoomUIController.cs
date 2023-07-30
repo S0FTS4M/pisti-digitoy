@@ -94,8 +94,9 @@ public class CreateRoomUIController : MonoBehaviour
         createButton.onClick.RemoveAllListeners();
         createButton.onClick.AddListener(() =>
         {
-            _roomManager.CreateRoom(playerCount, bet, roomConfig);
-            Hide();
+            bool success = _roomManager.CreateRoom(playerCount, bet, roomConfig);
+            if (success)
+                Hide();
         });
     }
 

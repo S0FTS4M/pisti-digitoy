@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class RoomManagementUIController : MonoBehaviour
@@ -11,7 +11,7 @@ public class RoomManagementUIController : MonoBehaviour
     private RoomUIController.Factory _roomUIControllerFactory;
 
     [Inject]
-    private void Construct(RoomManager.Settings roomManagerSettings, RoomUIController.Factory roomUIControllerFactory)
+    private void Construct(RoomManager.Settings roomManagerSettings, RoomUIController.Factory roomUIControllerFactory, PlayerBase pla)
     {
         _roomUIControllerFactory = roomUIControllerFactory;
 

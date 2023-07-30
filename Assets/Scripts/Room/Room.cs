@@ -7,6 +7,10 @@ public class Room
     public string Name { get; }
     public int MinBet { get; }
     public int MaxBet { get; }
+    public int Bet { get; set; }
+
+    public int CurrentBetAmount { get; set; }
+
     public List<PlayerBase> Players { get; }
     public RoomConfig Config  => _roomConfig; 
 
@@ -22,13 +26,13 @@ public class Room
     public void JoinRoom(PlayerBase player)
     {
         Players.Add(player);
-        player.CurrentRoom = this;
+        player.SetCurrentRoom(this);
     }
 
     public void AddBot(Bot bot)
     {
         Players.Add(bot);
-        bot.CurrentRoom = this;
+        bot.SetCurrentRoom(this);
     }
 
     [System.Serializable]

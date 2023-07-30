@@ -1178,6 +1178,7 @@ MonoBehaviour:
   winCountText: {fileID: 449231224}
   loseCountText: {fileID: 940597715}
   exitButton: {fileID: 921534775}
+  currencyText: {fileID: 1577396566}
   playerNameText: {fileID: 1898395373}
 --- !u!1 &519420028
 GameObject:
@@ -5001,6 +5002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomContainer: {fileID: 1919259942}
+  currencyText: {fileID: 1652588789}
 --- !u!1 &1240592630
 GameObject:
   m_ObjectHideFlags: 0

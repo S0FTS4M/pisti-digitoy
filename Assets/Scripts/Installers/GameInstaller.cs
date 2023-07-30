@@ -38,6 +38,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<GameController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<CreateRoomUIController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PlayerUIController>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<TableOptionsUIController>().FromComponentInHierarchy().AsSingle();
 
         //Factories and pools
         Container.BindFactory<RoomUIController, RoomUIController.Factory>().FromComponentInNewPrefab(roomManagerSettings.RoomPrefab);

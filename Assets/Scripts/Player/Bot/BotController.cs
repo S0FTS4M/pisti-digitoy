@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -15,7 +16,7 @@ public class BotController : PlayerControllerBase
         base.SetPlayer(player);
         _playerName.text = player.Name;
         _scoreText.text = player.Score.ToString();
-        _currencyText.text = player.Currency.Amount.ToString();
+        _currencyText.text = player.CurrentRoom.Bet.ToString();
     }
 
     protected override void OnPlayerTurn(PlayerBase player)

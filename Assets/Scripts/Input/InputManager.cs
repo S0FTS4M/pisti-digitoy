@@ -7,18 +7,22 @@ using Zenject;
 
 public class InputManager : MonoBehaviour, IPointerDownHandler
 {
+    private TableOptionsUIController _tableOptionsUIController;
     private PlayerControllerBase _playerController;
     private PlayerUIController _playerUIController;
 
     [Inject]
-    private void Construct(PlayerControllerBase playerController, PlayerUIController playerUIController)
+    private void Construct(PlayerControllerBase playerController, PlayerUIController playerUIController, TableOptionsUIController tableOptionsUIController)
     {
+        _tableOptionsUIController = tableOptionsUIController;
         _playerController = playerController;
         _playerUIController = playerUIController;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        _tableOptionsUIController.Hide();
+        
         var cardView = GetComponentUnderTouch<CardView>(eventData);
         var playerController = GetComponentUnderTouch<PlayerControllerBase>(eventData);
         if (playerController != null && cardView == null)

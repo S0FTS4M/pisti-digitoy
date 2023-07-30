@@ -28,31 +28,39 @@ public class RoomManager
         this.player = player;
     }
 
-    public void CreateRoom(int playerCount, double playerBet, Room.RoomConfig roomConfig)
+    public bool CreateRoom(int playerCount, int playerBet, Room.RoomConfig roomConfig)
     {
-        if (player.Currency.CanAfford(roomConfig.MinBet))
+        if (player.Currency.CanAfford(playerBet) && player.Currency.CanAfford(roomConfig.MinBet))
         {
             _currentRoom = new Room(roomConfig);
 
             RoomCreated?.Invoke(_currentRoom);
 
+            _currentRoom.Bet = (int)playerBet;
+
             _currentRoom.JoinRoom(player);
+            _currentRoom.CurrentBetAmount += _currentRoom.Bet;
             for (int i = 0; i < playerCount - 1; i++)
             {
                 var bot = _botFactory.Create();
                 _currentRoom.AddBot(bot);
+                _currentRoom.CurrentBetAmount += _currentRoom.Bet;
             }
             RoomJoined?.Invoke(_currentRoom);
             RoomReady?.Invoke(_currentRoom);
+            return true;
         }
         else
         {
             RoomCreationFailed?.Invoke(roomConfig);
+            return false;
         }
     }
 
     internal void LeaveRoom()
     {
+        if(CurrentRoom == null)
+            return;
         RoomLeft?.Invoke(_currentRoom);
         _currentRoom = null;
     }

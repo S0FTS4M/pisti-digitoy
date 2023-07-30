@@ -18,6 +18,9 @@ public abstract class PlayerBase
     public event PlayerTurnHandler PlayerTurn;
     public event PlayerTurnHandler PlayerEndTurn;
     public event ScoreHandler PlayerScored;
+    public event RoomHandler PlayerEnteredRoom;
+    public event WinLoseHandler PlayerWon;
+    public event WinLoseHandler PlayerLost;
 
     public PlayerBase(ICurrencyBase currency)
     {
@@ -26,7 +29,7 @@ public abstract class PlayerBase
         wonCards = new List<ICard>();
     }
 
-    public Room CurrentRoom { get; set; }
+    public Room CurrentRoom { get; private set; }
 
     public ICurrencyBase Currency => _currency;
 
@@ -93,6 +96,12 @@ public abstract class PlayerBase
         PlayerTurn?.Invoke(this);
     }
 
+    public virtual void SetCurrentRoom(Room room)
+    {
+        CurrentRoom = room;
+        PlayerEnteredRoom?.Invoke(room);
+    }
+
     public virtual void PlayCard(ICard card)
     {
         PlayerPlayedCard?.Invoke(this, card);
@@ -130,10 +139,12 @@ public abstract class PlayerBase
     public virtual void Win()
     {
         WinCount++;
+        PlayerWon?.Invoke(this);
     }
     public virtual void Lose()
     {
         LoseCount++;
+        PlayerLost?.Invoke(this);
     }
 }
 
@@ -142,3 +153,6 @@ public delegate void CardDrawRequestedHandler(int count);
 public delegate void PlayerTurnHandler(PlayerBase player);
 public delegate void PlayerCardPlayedHandler(PlayerBase player, ICard card);
 public delegate void ScoreHandler(int score);
+public delegate void RoomHandler(Room room);
+
+public delegate void WinLoseHandler(PlayerBase player);

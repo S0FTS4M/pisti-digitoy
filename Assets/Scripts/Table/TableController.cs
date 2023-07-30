@@ -36,6 +36,7 @@ public class TableController : MonoBehaviour
         var seq = DOTween.Sequence();
 
         Cards.Add(cardView.Card);
+        cardView.SetVisible(isVisible);
 
         var cardRect = cardView.GetComponent<RectTransform>();
         cardView.transform.SetParent(Table.transform);
@@ -43,7 +44,6 @@ public class TableController : MonoBehaviour
         cardRect.DOSizeDelta(Vector2.zero, _deckSettings.drawAnimTime);
         cardRect.DOAnchorPos(Vector2.zero, _deckSettings.drawAnimTime).OnComplete(() =>
         {
-            cardView.SetVisible(isVisible);
             onComplete?.Invoke();
         }
         );

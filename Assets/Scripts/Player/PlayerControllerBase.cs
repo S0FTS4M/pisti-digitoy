@@ -57,8 +57,20 @@ public abstract class PlayerControllerBase : MonoBehaviour
         _player.PlayerRequestedCardDraw += OnDrawCardRequested;
         _player.PlayerDrawnCards += OnDrawCard;
         _player.PlayerScored += OnPlayerScored;
+        _player.PlayerEnteredRoom += OnPlayerEnteredRoom;
+        _player.PlayerWon += OnPlayerWon;
     }
 
+    private void OnPlayerWon(PlayerBase player)
+    {
+        player.Currency.Increase(player.CurrentRoom.CurrentBetAmount);
+    }
+
+    private void OnPlayerEnteredRoom(Room room)
+    {
+        _currencyText.text = room.Bet.ToString();
+        Player.Currency.Decrease(room.Bet);
+    }
 
     private void OnDrawCard(PlayerBase player, List<ICard> cardsDrawn)
     {

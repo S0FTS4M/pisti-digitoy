@@ -32,9 +32,14 @@ public class TableOptionsUIController : MonoBehaviour
         newGameButton.onClick.AddListener(() =>
         {
             var currentRoom = roomManager.CurrentRoom;
+            if(currentRoom == null)
+            {
+                return;
+            }
             roomManager.LeaveRoom();
-            roomManager.CreateRoom(currentRoom.Players.Count, currentRoom.MaxBet, currentRoom.Config);
-            Hide();
+            var success = roomManager.CreateRoom(currentRoom.Players.Count, currentRoom.MinBet, currentRoom.Config);
+            if (success)
+                Hide();
         }
         );
     }
@@ -47,7 +52,7 @@ public class TableOptionsUIController : MonoBehaviour
 
     public void Hide()
     {
-        containerRect.DOAnchorPos(new Vector2(655,0), 0.5f).OnComplete(() =>
+        containerRect.DOAnchorPos(new Vector2(655, 0), 0.5f).OnComplete(() =>
         {
             container.SetActive(false);
         });

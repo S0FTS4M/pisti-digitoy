@@ -83,7 +83,7 @@ MonoBehaviour:
       MaxBet: 1000000
     DefaultPlayerCount: 2
   currencyBaseSettings:
-    Value: 100000
+    Value: 1000
   botSettings:
     BotPrefab: {fileID: 902885716309916187, guid: 99fff99d970b9c04d8809ccdc48289dd, type: 3}
   cardViewSettings:

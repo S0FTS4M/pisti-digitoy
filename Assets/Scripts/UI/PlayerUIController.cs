@@ -19,6 +19,9 @@ public class PlayerUIController : MonoBehaviour
     private Button exitButton;
 
     [SerializeField]
+    private TextMeshProUGUI currencyText;
+
+    [SerializeField]
     private TextMeshProUGUI playerNameText;
 
     public void Show(PlayerBase player)
@@ -30,6 +33,8 @@ public class PlayerUIController : MonoBehaviour
 
         exitButton.onClick.RemoveAllListeners();
         exitButton.onClick.AddListener(() =>Hide());
+
+        currencyText.text = player.Currency.Amount.ToString();
     }
 
     public void Hide()

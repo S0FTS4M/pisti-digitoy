@@ -71,8 +71,8 @@ public class RoomUIController : MonoBehaviour
 
     private void OnPlayButtonClicked()
     {
-        var maxPlayerCanBet = Mathf.Min((float)_player.Currency.Amount, _roomConfig.MaxBet);
-        _roomManager.CreateRoom(_roomManagerSettings.DefaultPlayerCount, maxPlayerCanBet, _roomConfig);
+        var maxPlayerCanBet = Mathf.Min((float)_player.Currency.Amount, _roomConfig.MinBet);
+        _roomManager.CreateRoom(_roomManagerSettings.DefaultPlayerCount, (int)maxPlayerCanBet, _roomConfig);
     }
 
     public class Factory : PlaceholderFactory<RoomUIController>
