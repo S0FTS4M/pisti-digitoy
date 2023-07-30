@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour, IPointerDownHandler
         if (_playerController.Player.HasCardInHand(cardView.Card) == false)
             return;
 
-        _playerController.PlayCard(cardView, _playerController.Player.EndTurn);
+        _playerController.PlayCard(cardView, ()=> _playerController.Player.PlayCard(cardView.Card));
     }
 
     private CardView GetCardUnderTouch(PointerEventData eventData)

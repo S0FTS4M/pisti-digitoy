@@ -9,6 +9,7 @@ public abstract class PlayerBase
 
     public event PlayerCardDrawHandler PlayerDrawnCards;
     public event CardDrawRequestedHandler PlayerRequestedCardDraw;
+    public event PlayerCardPlayedHandler PlayerPlayedCard;
     public event PlayerTurnHandler PlayerTurn;
     public event PlayerTurnHandler PlayerEndTurn;
 
@@ -89,6 +90,17 @@ public abstract class PlayerBase
         PlayerTurn?.Invoke(this);
     }
 
+    public virtual void PlayCard(ICard card)
+    {
+        PlayerPlayedCard?.Invoke(this, card);
+    }
+
+    public virtual void AddScore(int score)
+    {
+        Score += score;
+        //TODO: notify UI of score change
+    }
+
     public void EndTurn()
     {
         PlayerEndTurn?.Invoke(this);
@@ -103,3 +115,4 @@ public abstract class PlayerBase
 public delegate void PlayerCardDrawHandler(PlayerBase player, List<ICard> cardsDrawn);
 public delegate void CardDrawRequestedHandler(int count);
 public delegate void PlayerTurnHandler(PlayerBase player);
+public delegate void PlayerCardPlayedHandler(PlayerBase player, ICard card);

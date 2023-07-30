@@ -16,6 +16,9 @@ public abstract class PlayerControllerBase : MonoBehaviour
     [SerializeField]
     protected TextMeshProUGUI _scoreText;
 
+    [SerializeField]
+    protected Transform _wonCardsPileParent;
+
     private int _currentSlotIndex = 0;
 
     private PlayerBase _player;
@@ -23,6 +26,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
     private Deck.Settings _deckSettings;
     private DeckController _deckController;
     protected TableController _tableController;
+    private GameRuleManager _gameRuleManager;
 
     public bool HasTurn { get; set; }
 
@@ -31,11 +35,12 @@ public abstract class PlayerControllerBase : MonoBehaviour
     public List<Transform> HandSlots { get; } = new List<Transform>();
 
     [Inject]
-    private void Construct(Deck.Settings deckSettings, DeckController deckController, TableController tableController)
+    private void Construct(Deck.Settings deckSettings, DeckController deckController, TableController tableController, GameRuleManager gameRuleManager)
     {
         _deckSettings = deckSettings;
         _deckController = deckController;
         _tableController = tableController;
+        _gameRuleManager = gameRuleManager;
     }
 
     public virtual void SetPlayer(PlayerBase player)
@@ -79,7 +84,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
         return currentSlot;
     }
-    
+
     public virtual void PlayCard(CardView cardView, Action onComplete)
     {
         _tableController.PutCard(cardView, true, onComplete);
@@ -91,7 +96,6 @@ public abstract class PlayerControllerBase : MonoBehaviour
         var cardView = FindCard(card);
         if (cardView == null)
             return;
-
         PlayCard(cardView, onComplete);
     }
 
@@ -140,4 +144,43 @@ public abstract class PlayerControllerBase : MonoBehaviour
         }
 
     }
+
+    public virtual void WonTheCardsOnTheTable(Sequence sequence)
+    {
+        var cardOnTable = _tableController.Cards;
+        foreach (var card in cardOnTable)
+        {
+            Player.AddScore(_gameRuleManager.GetScoreForCard(card));
+        }
+
+        AnimateCards(sequence);
+
+    }
+
+    public virtual void Phisti(Sequence sequence)
+    {
+        Player.AddScore(_gameRuleManager.GetScoreForPishti());
+        //Notify UI for pishti
+
+        AnimateCards(sequence);
+    }
+
+    private void AnimateCards(Sequence seq)
+    {
+        for(int i = _tableController.Table.transform.childCount - 1; i >= 0; i--)
+        {
+            var cardViewTransform = _tableController.Table.transform.GetChild(i);
+            cardViewTransform.SetParent(_wonCardsPileParent);
+            var rectTansform = cardViewTransform.GetComponent<RectTransform>();
+            seq.AppendCallback(() =>
+            {
+                rectTansform.DOAnchorPos(Vector2.zero, .1f);
+                rectTansform.DOSizeDelta(Vector2.zero, .1f);
+            });
+            seq.AppendInterval(.1f);
+        }
+
+        _tableController.Cards.Clear();
+    }
+
 }

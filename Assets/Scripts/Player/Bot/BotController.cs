@@ -22,19 +22,26 @@ public class BotController : PlayerControllerBase
     {
         base.OnPlayerTurn(player);
 
+        Debug.Log("player turn");
+
         var topCard = _tableController.GetTopCard();
-        for (int i = 0; i < Player.Hand.Count; i++)
+        if (topCard != null)
         {
-            //NOTE: we can create a Rank enum and put Jack = 11, Queen = 12, King = 13, Ace = 1 but for now we will just check for the value
-            if (topCard.Rank == Player.Hand[i].Rank || Player.Hand[i].Rank == 11)
+
+            for (int i = 0; i < Player.Hand.Count; i++)
             {
-                int index = i;
-                PlayCard(Player.Hand[index], Player.EndTurn);
-                return;
+                //NOTE: we can create a Rank enum and put Jack = 11, Queen = 12, King = 13, Ace = 1 but for now we will just check for the value
+                if (topCard.Rank == Player.Hand[i].Rank || Player.Hand[i].Rank == 11)
+                {
+                    var card = Player.Hand[i];
+                    PlayCard(card, () => player.PlayCard(card));
+                    return;
+                }
             }
         }
+
         var randomCard = Player.Hand[UnityEngine.Random.Range(0, Player.Hand.Count)];
-        PlayCard(randomCard, Player.EndTurn);
+        PlayCard(randomCard, () => player.PlayCard(randomCard));
     }
 
     public class Factory : PlaceholderFactory<BotController>

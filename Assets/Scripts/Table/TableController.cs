@@ -72,6 +72,9 @@ public class TableController : MonoBehaviour
 
     public ICard GetTopCard()
     {
+        if(Cards.Count == 0)
+            return null;
+            
         return Cards[Cards.Count - 1];
     }
 }
