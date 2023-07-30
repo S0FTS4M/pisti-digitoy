@@ -47,7 +47,15 @@ public class DeckController : MonoBehaviour
 
     private void OnRoomCreated(Room room)
     {
+        if(_deck != null)
+            _deck.CardDrawn -= OnCardDrawn;
         _deck = _deckFactory.Create();
         _deck.Shuffle();
+        _deck.CardDrawn += OnCardDrawn;
+    }
+
+    private void OnCardDrawn(ICard card)
+    {
+        deckTransform.gameObject.SetActive(_deck.CardCount != 0);
     }
 }

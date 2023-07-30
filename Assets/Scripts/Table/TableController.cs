@@ -18,10 +18,11 @@ public class TableController : MonoBehaviour
     public List<ICard> Cards { get; private set; }
 
     [Inject]
-    private void Construct(DeckController deckController, Deck.Settings deckSettings)
+    private void Construct(DeckController deckController, Deck.Settings deckSettings, RoomManager roomManager)
     {
         _deckSettings = deckSettings;
         _deckController = deckController;
+        roomManager.RoomLeft += OnRoomLeft;
     }
 
     public void Initialize(Deck deck)
@@ -76,5 +77,14 @@ public class TableController : MonoBehaviour
             return null;
             
         return Cards[Cards.Count - 1];
+    }
+
+    private void OnRoomLeft(Room room)
+    {
+        Cards.Clear();
+        foreach (Transform child in Table.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

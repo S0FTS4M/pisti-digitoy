@@ -7,7 +7,7 @@ public class Bot : PlayerBase
 {
     public Bot(ICurrencyBase currencyBase) : base(currencyBase)
     {
-  
+        name = "Bot";
     }
 
     public class Factory : PlaceholderFactory<Bot>

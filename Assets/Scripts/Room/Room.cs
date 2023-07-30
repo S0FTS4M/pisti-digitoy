@@ -8,6 +8,7 @@ public class Room
     public int MinBet { get; }
     public int MaxBet { get; }
     public List<PlayerBase> Players { get; }
+    public RoomConfig Config  => _roomConfig; 
 
     public Room(RoomConfig roomConfig)
     {

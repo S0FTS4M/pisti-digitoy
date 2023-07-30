@@ -6,6 +6,7 @@ public class Player : PlayerBase
 {
     public Player(ICurrencyBase currency, DataManager dataManager) : base(currency)
     {
+        name = "Player";
         if(dataManager.PlayerData.IsLoaded)
         {
             WinCount = dataManager.PlayerData.WinCount;

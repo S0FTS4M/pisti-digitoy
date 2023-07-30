@@ -10,6 +10,8 @@ public abstract class PlayerBase
 
     private ICurrencyBase _currency;
 
+    protected string name;
+
     public event PlayerCardDrawHandler PlayerDrawnCards;
     public event CardDrawRequestedHandler PlayerRequestedCardDraw;
     public event PlayerCardPlayedHandler PlayerPlayedCard;
@@ -32,13 +34,15 @@ public abstract class PlayerBase
 
     public int Score { get; protected set; }
 
-    public int WinCount { get; protected set; }
+    public int WinCount { get; set; }
 
-    public int LoseCount { get; protected set; }
+    public int LoseCount { get; set; }
 
     public List<ICard> Hand => hand;
 
     public List<ICard> WonCards => wonCards;
+
+    public string Name  => name;
 
     public List<ICard> DrawCardsFromDeck(int numCardsToDraw)
     {
@@ -113,6 +117,12 @@ public abstract class PlayerBase
     public void AddWonCard(ICard card)
     {
         wonCards.Add(card);
+    }
+
+    public void ClearHand()
+    {
+        hand.Clear();
+        wonCards.Clear();
     }
 }
 

@@ -28,6 +28,12 @@ public class CreateRoomUIController : MonoBehaviour
     private TextMeshProUGUI betText;
 
     [SerializeField]
+    private TextMeshProUGUI minBetText;
+
+    [SerializeField]
+    private TextMeshProUGUI maxBetText;
+
+    [SerializeField]
     private Button createButton;
 
     private int playerCount = 2;
@@ -45,7 +51,7 @@ public class CreateRoomUIController : MonoBehaviour
         _entranceUIController = entranceUIController;
         _roomManager = roomManager;
         _player = playerBase;
-        closeButton.onClick.AddListener(Hide);
+        closeButton.onClick.AddListener(Close);
 
         twoPlayersToggle.onValueChanged.AddListener(OnTwoPlayersToggleValueChanged);
         fourPlayersToggle.onValueChanged.AddListener(OnFourPlayersToggleValueChanged);
@@ -82,6 +88,8 @@ public class CreateRoomUIController : MonoBehaviour
         betSlider.minValue = roomConfig.MinBet;
         betSlider.maxValue = roomConfig.MaxBet;
         betSlider.value = roomConfig.MinBet;
+        minBetText.text = roomConfig.MinBet.ToString();
+        maxBetText.text = roomConfig.MaxBet.ToString();
         betText.text = roomConfig.MinBet.ToString();
         createButton.onClick.RemoveAllListeners();
         createButton.onClick.AddListener(() =>

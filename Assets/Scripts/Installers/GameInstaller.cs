@@ -20,20 +20,26 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        //Model classes
         Container.Bind<DataManager>().AsSingle();
         Container.Bind<RoomManager>().AsSingle();
         Container.Bind<PlayerBase>().To<Player>().AsSingle();
-        Container.Bind<PlayerControllerBase>().To<PlayerController>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<ICurrencyBase>().To<MainCurrencyBase>().AsTransient();
+        Container.Bind<ITurnManager>().To<TurnManager>().AsSingle();
+        Container.Bind<GameRuleManager>().AsSingle().NonLazy();
         Container.Bind<IDeck>().To<Deck>().AsTransient();
         Container.Bind<IList<ICard>>().FromMethod(CreateCards).AsTransient();
+        Container.Bind<ICurrencyBase>().To<MainCurrencyBase>().AsTransient();
+
+        //Controllers from hierarchy
+        Container.Bind<PlayerControllerBase>().To<PlayerController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<EntranceUIController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DeckController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<TableController>().FromComponentInHierarchy().AsSingle();
         Container.Bind<GameController>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<ITurnManager>().To<TurnManager>().AsSingle();
-        Container.Bind<GameRuleManager>().AsSingle().NonLazy();
         Container.Bind<CreateRoomUIController>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlayerUIController>().FromComponentInHierarchy().AsSingle();
+
+        //Factories and pools
         Container.BindFactory<RoomUIController, RoomUIController.Factory>().FromComponentInNewPrefab(roomManagerSettings.RoomPrefab);
         Container.BindFactory<BotController, BotController.Factory>().FromComponentInNewPrefab(botSettings.BotPrefab);
         Container.BindFactory<Bot, Bot.Factory>().AsSingle();

@@ -13,7 +13,7 @@ public class BotController : PlayerControllerBase
     public override void SetPlayer(PlayerBase player)
     {
         base.SetPlayer(player);
-        _playerName.text = "Bot";
+        _playerName.text = player.Name;
         _scoreText.text = player.Score.ToString();
         _currencyText.text = player.Currency.Amount.ToString();
     }

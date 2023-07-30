@@ -118,6 +118,23 @@ public abstract class PlayerControllerBase : MonoBehaviour
         return null;
     }
 
+    public void ClearAllCards()
+    {
+        foreach (var handSlot in HandSlots)
+        {
+            foreach (Transform child in handSlot)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        foreach (Transform child in _wonCardsPileParent)
+        {
+            Destroy(child.gameObject);
+        }
+        Player.ClearHand();
+        HasTurn = false;
+    }
+
     protected virtual void OnPlayerTurn(PlayerBase player)
     {
         HasTurn = true;

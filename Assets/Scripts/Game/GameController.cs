@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -46,8 +44,25 @@ public class GameController : MonoBehaviour
         _turnManager = turnManager;
 
         _roomManager.RoomReady += OnRoomReady;
+        _roomManager.RoomLeft += OnRoomLeft;
 
         _playerControllers.Add(player, playerController);
+    }
+
+    private void OnRoomLeft(Room room)
+    {
+        foreach(var player in room.Players)
+        {
+            if(player == _currentPlayer)
+                continue;
+
+            var playerController = GetPlayerController(player);
+            playerController.ClearAllCards();
+            _playerControllers.Remove(player);
+            Destroy(playerController.gameObject);
+        }
+        var currentPlayerController = GetPlayerController(_currentPlayer);
+        currentPlayerController.ClearAllCards();
     }
 
     private void OnRoomReady(Room room)
@@ -79,6 +94,11 @@ public class GameController : MonoBehaviour
         }
         
         return null;
+    }
+
+    public void Hide()
+    {
+        _container.gameObject.SetActive(false);
     }
 
     public void GameOver()

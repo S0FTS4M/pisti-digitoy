@@ -113,7 +113,7 @@ public class GameRuleManager
         var maxCardsPlayer = default(PlayerBase);
         foreach (var player in _currentRoom.Players)
         {
-            if(player.WonCards.Count > maxCards)
+            if (player.WonCards.Count > maxCards)
             {
                 maxCards = player.WonCards.Count;
                 maxCardsPlayer = player;
@@ -128,6 +128,26 @@ public class GameRuleManager
         var seq = DOTween.Sequence();
         var playerController = _gameController.GetPlayerController(lastPlayerCollectedCards);
         playerController.WonTheCardsOnTheTable(seq);
+
+        var maxScore = int.MinValue;
+        var maxScorePlayer = default(PlayerBase);
+        for (int i = 0; i < _currentRoom.Players.Count; i++)
+        {
+            var player = _currentRoom.Players[i];
+            if (player.Score > maxScore)
+            {
+                maxScore = player.Score;
+                maxScorePlayer = player;
+            }
+        }
+        maxScorePlayer.WinCount++;
+        foreach (var player in _currentRoom.Players)
+        {
+            if (player != maxScorePlayer)
+            {
+                player.LoseCount++;
+            }
+        }
     }
 
 }

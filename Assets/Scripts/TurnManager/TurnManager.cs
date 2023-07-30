@@ -47,7 +47,7 @@ public class TurnManager : ITurnManager
             );
             seq.AppendInterval(1f);
         }
-        CurrentPlayer.TakeTurn();
+        seq.AppendCallback(() => CurrentPlayer.TakeTurn());
     }
 
     public void AddPlayer(PlayerBase player)
@@ -58,11 +58,11 @@ public class TurnManager : ITurnManager
 
     private void OnPlayerEndTurn(PlayerBase player)
     {
+        var seq = DOTween.Sequence();
         if (CheckAllPlayersOutOfCards())
         {
             if (player.Deck.CardCount >= _players.Count * _deckSettings.initialDrawCount)
             {
-                var seq = DOTween.Sequence();
                 for (int i = 0; i < _players.Count; i++)
                 {
                     int index = i;
@@ -81,7 +81,7 @@ public class TurnManager : ITurnManager
 
             }
         }
-        SwitchPlayer();
+        seq.AppendCallback(() => SwitchPlayer());
     }
 
     private bool CheckAllPlayersOutOfCards()
@@ -113,6 +113,10 @@ public class TurnManager : ITurnManager
 
     public void ClearPlayers()
     {
+        foreach (var player in _players)
+        {
+            player.PlayerEndTurn -= OnPlayerEndTurn;
+        }
         _players.Clear();
     }
 

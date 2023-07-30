@@ -11,6 +11,8 @@ public class RoomManager
 
     private Bot.Factory _botFactory;
 
+    public Room CurrentRoom  => _currentRoom; 
+
     public delegate void RoomHandler(Room room);
 
     public event RoomHandler RoomCreated;
@@ -47,6 +49,12 @@ public class RoomManager
         {
             RoomCreationFailed?.Invoke(roomConfig);
         }
+    }
+
+    internal void LeaveRoom()
+    {
+        RoomLeft?.Invoke(_currentRoom);
+        _currentRoom = null;
     }
 
     [System.Serializable]
