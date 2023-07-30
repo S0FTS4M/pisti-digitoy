@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e0e72489b81644ab3e1cfc3e858933, type: 3}
+  m_Name: GameSettingsInstaller
+  m_EditorClassIdentifier: 
+  deckSettings:
+    cardInfos:
+    - {fileID: 11400000, guid: c49ec161451a7c04e8359d3ded2f64dc, type: 2}
+    - {fileID: 11400000, guid: bcdef68bcb0eabb49afa559417336a7f, type: 2}
+    - {fileID: 11400000, guid: 70bef818ccd413147bb31ecca7ded13b, type: 2}
+    - {fileID: 11400000, guid: 03ad9bb042374534f9c04c9ee30a36ee, type: 2}
+    - {fileID: 11400000, guid: df619f83472013a4cb73deccc24700c5, type: 2}
+    - {fileID: 11400000, guid: d03b10e017e855942bc08d1f2eda3247, type: 2}
+    - {fileID: 11400000, guid: e7269801c7bc55d4182b414cacff984c, type: 2}
+    - {fileID: 11400000, guid: c92a1318b1a5e814095961f2ab66005c, type: 2}
+    - {fileID: 11400000, guid: 4c2dc43ca83b06c4eb8eb9aaf7938000, type: 2}
+    - {fileID: 11400000, guid: e28e8c4fca87ea8468a3da42c46918ee, type: 2}
+    - {fileID: 11400000, guid: a2db8e8ebbba60745bd122c80d583563, type: 2}
+    - {fileID: 11400000, guid: ea2a2da8c09aa344c82772b0adf7031e, type: 2}
+    - {fileID: 11400000, guid: 30b08dae1f0e8a6448d9f94fa93f1860, type: 2}
+    - {fileID: 11400000, guid: f8350ca606304364f824b42be7903ddd, type: 2}
+    - {fileID: 11400000, guid: c7e3daf5d5812854ca32c522e01b7a57, type: 2}
+    - {fileID: 11400000, guid: 3a519c0a43cc32c47b2be1d12fcb49a3, type: 2}
+    - {fileID: 11400000, guid: b023cd8ee3bf36d48bcb68bd62bea31c, type: 2}
+    - {fileID: 11400000, guid: ffc4af438126e9d4ebb08e943a393d5c, type: 2}
+    - {fileID: 11400000, guid: 04041169e8495c34aa5d59efc417089f, type: 2}
+    - {fileID: 11400000, guid: 22cc7397b1022a1458f164ae77b18733, type: 2}
+    - {fileID: 11400000, guid: 76542a5094a040e418cb432e3cd62ff0, type: 2}
+    - {fileID: 11400000, guid: 46e1b984b101b914dbff7166e03876ad, type: 2}
+    - {fileID: 11400000, guid: 29d3fff8606a0f548b660105182ac3c3, type: 2}
+    - {fileID: 11400000, guid: 5771485337d09e041b3de6a5335d611d, type: 2}
+    - {fileID: 11400000, guid: e84e4907e6d841948b0be4f3cfb8c949, type: 2}
+    - {fileID: 11400000, guid: c68b19fd8b12e5146b9fc44a1bf53f8c, type: 2}
+    - {fileID: 11400000, guid: 01d39055b0dad9a4f824dd88ab840660, type: 2}
+    - {fileID: 11400000, guid: e0eff25f22254bc41a576c67baee01cf, type: 2}
+    - {fileID: 11400000, guid: 031ceaf2c74fa5e4ba7e57b230f02dad, type: 2}
+    - {fileID: 11400000, guid: 73a8d5d15af4c334e98cc67679d33e95, type: 2}
+    - {fileID: 11400000, guid: c18c3547894895047b9df7523888a953, type: 2}
+    - {fileID: 11400000, guid: b30ba033e9a093e449b8a89a122df36c, type: 2}
+    - {fileID: 11400000, guid: 465e2ed18f671434cb81cd498d293ebc, type: 2}
+    - {fileID: 11400000, guid: 509f6763d25233143bd209e8c658a9b4, type: 2}
+    - {fileID: 11400000, guid: 171205455b1859f4d8c0df4e1ad43639, type: 2}
+    - {fileID: 11400000, guid: 7bb1fb3cb5c490a4aa03b0fe33be6d74, type: 2}
+    - {fileID: 11400000, guid: 7636ec3d0112442469aa1f863e047f83, type: 2}
+    - {fileID: 11400000, guid: 7ea6f4072a817e34f88b0675720d8b91, type: 2}
+    - {fileID: 11400000, guid: 8def0e9d3208c994e82c1d9fc067ce04, type: 2}
+    - {fileID: 11400000, guid: 9a084fd1afea8d947bca92f3039c4a13, type: 2}
+    - {fileID: 11400000, guid: a179a0c3c0580194291d6615b872980e, type: 2}
+    - {fileID: 11400000, guid: 48021eafa3a6e3a4cac0d4383b87d144, type: 2}
+    - {fileID: 11400000, guid: b1b044f041ec9d54483326c6b54e6e67, type: 2}
+    - {fileID: 11400000, guid: 8a7da11a920aab6479e9302ca16049e8, type: 2}
+    - {fileID: 11400000, guid: c044fc185cc9b0945a585f8d8f775126, type: 2}
+    - {fileID: 11400000, guid: f9906240df546ce4cb21282fdfcd36bf, type: 2}
+    - {fileID: 11400000, guid: 6bec8871e60ee494093368d2a0b0ca8e, type: 2}
+    - {fileID: 11400000, guid: e9162891818f6784ea13da9c81e7fd90, type: 2}
+    - {fileID: 11400000, guid: 51b28cc02906b294e9968eeda4091f8c, type: 2}
+    - {fileID: 11400000, guid: 8c1899fd01e059d44bf4b81edf7696a5, type: 2}
+    - {fileID: 11400000, guid: 1b4a1bacdf8952a41acffb10f4b03ebe, type: 2}
+    - {fileID: 11400000, guid: da1a2d318d73492458c9ed82720a03e1, type: 2}
+    drawAnimTime: 0.4
+    drawAnimDelay: 0.3
+    initialDrawCount: 4
+  roomManagerSettings:
+    RoomPrefab: {fileID: 924871446429060408, guid: 80386dce0aea29b4592cb274a8336869, type: 3}
+    RoomConfigs:
+    - Name: Newbies
+      MinBet: 250
+      MaxBet: 5000
+    - Name: Rookies
+      MinBet: 2500
+      MaxBet: 100000
+    - Name: Nobles
+      MinBet: 50000
+      MaxBet: 1000000
+    DefaultPlayerCount: 2
+  currencyBaseSettings:
+    Value: 1000
+  botSettings:
+    BotPrefab: {fileID: 902885716309916187, guid: 99fff99d970b9c04d8809ccdc48289dd, type: 3}
+  cardViewSettings:
+    cardPrefab: {fileID: 3171655363206158697, guid: 83171ef57b515d34a872bbb6d8379252, type: 3}
+  cardSettings:
+    cardBacks: {fileID: 21300000, guid: 424532b965e0a3a47b2329082e375355, type: 3}
